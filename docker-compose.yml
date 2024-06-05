@@ -6,7 +6,7 @@ services:
         context: .dockerfiles
         dockerfile: DockerfileFront
       ports:
-        - 8080:5173
+        - 8080:3000
       volumes:
         - ./front:/app
       command: 'npm run dev'

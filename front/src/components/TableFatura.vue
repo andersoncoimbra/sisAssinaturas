@@ -4,7 +4,7 @@
     </v-alert>
     <v-data-table
         :headers="headers"
-        :items="faturas"
+        :items="transportadoras"
         :sort-by="[{ key: 'id', order: 'desc' }]"
     >
       <template v-slot:top>        
@@ -12,7 +12,7 @@
           flat
         >
         
-          <v-toolbar-title>Faturas</v-toolbar-title>
+          <v-toolbar-title>transportadoras</v-toolbar-title>
           <v-divider
             class="mx-4"
             inset
@@ -150,7 +150,7 @@
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="fetchfaturas"
+          @click="fetchtransportadoras"
         >
           Reset
         </v-btn>
@@ -175,7 +175,7 @@ export default {
                 { title: 'Valor', key: 'valor' },
                 { title: 'Ações', key: 'actions', sortable: false },
             ],
-            faturas: [],
+            transportadoras: [],
             loading: true,
             dialog: false,
             dialogDelete: false,
@@ -216,15 +216,15 @@ export default {
         },
     },
     mounted() {
-        this.fetchfaturas();
+        this.fetchtransportadoras();
         this.fetchAssinaturas();
     },
     methods: {
-        fetchfaturas() {
+        fetchtransportadoras() {
             axios
-                .get('/faturas')
+                .get('/transportadoras')
                 .then((response) => {
-                    this.faturas = response.data;
+                    this.transportadoras = response.data;
                     this.loading = false;
                 })
                 .catch((error) => {
@@ -247,12 +247,12 @@ export default {
         },
         async savefatura() {
             axios
-                .post('/faturas', {
+                .post('/transportadoras', {
                     ...this.editedItem,
                 })
                 .then((response) => {
                     this.message = `Fatura de ${response.data.assinatura.user.name} cadastrada com sucesso!`;
-                    this.faturas.push(response.data);
+                    this.transportadoras.push(response.data);
                     this.typemessage = 'success';
                     this.dialog = false;
                     this.$refs.form.reset();
@@ -266,12 +266,12 @@ export default {
         },
         async updatefatura() {
             axios
-                .put(`/faturas/${this.editedItem.id}`, {
+                .put(`/transportadoras/${this.editedItem.id}`, {
                     ...this.editedItem,
                 })
                 .then((response) => {
                     this.message = `Fatura de ${response.data.assinatura.user.name} atualizada com sucesso!`;
-                    this.faturas[this.editedIndex] = response.data;
+                    this.transportadoras[this.editedIndex] = response.data;
                     this.typemessage = 'success';
                     this.dialog = false;
                     this.$refs.form.reset();
@@ -284,14 +284,14 @@ export default {
                 });
         },
         editItem(item) {
-            this.editedIndex = this.faturas.indexOf(item);
+            this.editedIndex = this.transportadoras.indexOf(item);
             this.editedItem = Object.assign({}, item);            
             this.dialog = true;
         },
         deleteItemConfirm() {
             let cliente = this.editedItem.assinatura.user.name;
             axios
-                .delete(`/faturas/${this.editedItem.id}`)
+                .delete(`/transportadoras/${this.editedItem.id}`)
                 .then((response) => {
                     this.message = `Fatura  de ${cliente} excluída com sucesso!`;
                     this.typemessage = 'success';                                        
@@ -302,11 +302,11 @@ export default {
                     this.typemessage = 'error';
                     this.loading = false;
                 });
-            this.faturas.splice(this.editedIndex, 1);
+            this.transportadoras.splice(this.editedIndex, 1);
             this.closeDelete();
         },
         deleteItem(item) {
-            this.editedIndex = this.faturas.indexOf(item);
+            this.editedIndex = this.transportadoras.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
