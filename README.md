@@ -18,10 +18,10 @@ Sistema de assinaturas
 1. Clone o repositório:
 
    ```shell
-   git clone https://github.com/andersoncoimbra/desafio-andersoncoimbra
+   git clone https://github.com/andersoncoimbra/sisAssinaturas.git
 2. Entre no diretorio do projeto CadEletro
    ```shell
-   cd desafio-andersoncoimbra
+   cd sisAssinaturas
 3. Ative os containers via docker-compose
    ```shell
    docker compose up
